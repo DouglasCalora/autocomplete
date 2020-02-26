@@ -1,7 +1,6 @@
 <template>
-  <div v-bind="$attrs" v-on="$listeners">
-    <q-input v-bind="$attrs" v-model="search" :debounce="debounce" :loading="loadingState" @input.native="setLoading">
-      {{search}}
+  <div v-on="$listeners">
+    <q-input v-bind="inputProps" v-model="search" :debounce="debounce" :loading="loadingState" @input.native="setLoading($event.target.value)">
       <template v-slot:append>
         <q-btn v-if="hasResult" icon="close" flat @click="clearSeach"/>
         <q-btn icon="search" flat/>
@@ -31,14 +30,19 @@ export default {
       default: () => []
     },
 
+    inputProps: {
+      type: Object,
+      default: () => ({})
+    },
+
     searchKeys: {
       type: [String, Array],
-      default: 'name'
+      default: 'title'
     },
 
     mainKey: {
       type: String,
-      default: 'name'
+      default: 'title'
     },
 
     debounce: {
@@ -59,14 +63,6 @@ export default {
   watch: {
     search (value) {
       this.filter(value)
-    },
-
-    loadingState (value) {
-      if (value && !this.search) {
-        setTimeout(() => {
-          this.loadingState = false
-        }, 1000)
-      }
     }
   },
 
@@ -78,7 +74,6 @@ export default {
 
   methods: {
     filter (value) {
-      console.log('fui chamado')
       this.clearResults()
 
       if (!value) {
@@ -105,20 +100,24 @@ export default {
     increment (result, value) {
       this.result.push(result)
       this.formattedResult.push(result)
-      this.insertSpan(result, value)
+      this.hightlight(result, value)
     },
 
-    setLoading () {
-      this.loadingState = !this.hasResult
+    setLoading (value) {
+      if (!value) {
+        this.loadingState = false
+      } else {
+        this.loadingState = !this.hasResult
+      }
     },
 
-    insertSpan (result, value) {
+    hightlight (result, value) {
       this.$set(
         this.formattedResult,
         this.formattedResult.length - 1,
         {
           ...this.formattedResult[this.formattedResult.length - 1],
-          [this.mainKey]: result[this.mainKey].replace(value, `<span class="hightlight">${value}</span>`)
+          [this.mainKey]: result[this.mainKey].toLowerCase().replace(value, `<span class="hightlight">${value}</span>`)
         }
       )
     },
@@ -141,11 +140,11 @@ export default {
 
 <style lang="scss">
 .fade-enter-active, .fade-leave-active {
-  transition: opacity .5s, height 1s;
+  transition: opacity .5s;
 }
+
 .fade-enter, .fade-leave-to {
-  opacity: 0;
-  height: 0;
+  opacity: 0
 }
 
 .hightlight {

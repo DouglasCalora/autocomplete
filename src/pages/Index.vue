@@ -2,7 +2,7 @@
   <q-page class="">
     <h1 class="text-h4 text-center text-primary">Autocomplete example</h1>
     <div class="row justify-center">
-      <autocomplete class="q-pa-lg col-6" :list="results" filled :searchKeys="['name', 'age', 'test']" />
+      <autocomplete class="q-pa-lg col-6" :list="results" label="aeaee" mainKey="name" :searchKeys="['age', 'name']" :inputProps="{ placeholder: 'Search for name, age...', filled: true }" />
     </div>
   </q-page>
 </template>
@@ -21,11 +21,11 @@ export default {
     return {
       results: [
         {
-          name: 'douglas',
+          name: 'John',
           age: '24'
         },
         {
-          name: 'joão',
+          name: 'Roberta',
           age: '23'
         },
         {
@@ -33,9 +33,8 @@ export default {
           age: '22'
         },
         {
-          name: 'douglas calora',
-          age: '22',
-          test: 'hue'
+          name: 'Douglas',
+          age: '22'
         }
       ]
     }
