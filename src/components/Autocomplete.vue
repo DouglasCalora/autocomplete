@@ -113,6 +113,7 @@ export default {
 
     hightlight (result, value) {
       const index = this.formattedResult.length - 1
+
       this.$set(
         this.formattedResult,
         index,
