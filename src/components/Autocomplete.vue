@@ -112,11 +112,12 @@ export default {
     },
 
     hightlight (result, value) {
+      const index = this.formattedResult.length - 1
       this.$set(
         this.formattedResult,
-        this.formattedResult.length - 1,
+        index,
         {
-          ...this.formattedResult[this.formattedResult.length - 1],
+          ...this.formattedResult[index],
           [this.mainKey]: result[this.mainKey].toLowerCase().replace(value, `<span class="hightlight">${value}</span>`)
         }
       )
