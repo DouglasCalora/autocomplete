@@ -82,10 +82,10 @@ export default {
 
       value = value.trim().replace(/\s{2,}/g, ' ').toLowerCase()
 
-      this.list.forEach((result, listIndex) => {
+      this.list.forEach(result => {
         if (Array.isArray(this.searchKeys)) {
           this.searchKeys.forEach(key => {
-            if (result[key] && result[key] && result[key].toLowerCase().search(value) >= 0) {
+            if (result[key] && result[key].toLowerCase().search(value) >= 0) {
               this.increment(result, value)
             }
           })
