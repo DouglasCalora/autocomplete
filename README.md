@@ -1,4 +1,4 @@
-# autocomplete (autocomplete)
+# autocomplete
 
 autocomplete input
 
